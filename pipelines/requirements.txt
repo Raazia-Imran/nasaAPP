@@ -1,0 +1,7 @@
+# Preparation tools; create a virtual environment before installation.
+# Lock the tested versions after the first successful source pipeline.
+xarray>=2025.1
+numpy>=2
+netCDF4>=1.7
+earthaccess>=0.14
+jsonschema>=4.23

@@ -1,0 +1,10 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; color: #172e40; background: #f5f8fa; line-height: 1.65; }
+:focus-visible { outline: 3px solid #a33a00; outline-offset: 4px; }
+.skip { position: absolute; left: 1rem; top: -5rem; background: white; padding: .5rem; }
+.skip:focus { top: .5rem; }
+header, main { max-width: 68rem; margin: auto; padding: 1.5rem; }
+header { padding-top: 3rem; }
+h1 { font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.15; }
+article { padding: 1.2rem; margin-block: 1rem; border: 1px solid #8b9da8; border-radius: .7rem; background: white; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }

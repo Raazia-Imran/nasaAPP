@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Earth Jukebox Track v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "kind",
+    "title",
+    "unit",
+    "source_status",
+    "sources",
+    "records"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "enum": [
+        "rainfall",
+        "sst_anomaly"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "unit": {
+      "enum": [
+        "mm/day",
+        "degC"
+      ]
+    },
+    "source_status": {
+      "enum": [
+        "synthetic",
+        "verified"
+      ]
+    },
+    "baseline": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "place_id",
+          "timestamp_utc",
+          "value",
+          "valid_fraction",
+          "status",
+          "frame_id"
+        ],
+        "properties": {
+          "place_id": {
+            "type": "string"
+          },
+          "timestamp_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "reference": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "departure": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "valid_fraction": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "status": {
+            "enum": [
+              "valid",
+              "missing"
+            ]
+          },
+          "frame_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "rainfall"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "unit": {
+            "const": "mm/day"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "sst_anomaly"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "baseline"
+        ],
+        "properties": {
+          "unit": {
+            "const": "degC"
+          },
+          "records": {
+            "items": {
+              "required": [
+                "reference",
+                "departure"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
